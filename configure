@@ -2371,7 +2371,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=indicator-messages
- VERSION=0.1.4
+ VERSION=0.1.5
 
 
 cat >>confdefs.h <<_ACEOF
@@ -12067,7 +12067,7 @@ CC="$lt_save_CC"
 GTK_REQUIRED_VERSION=2.12
 GIO_UNIX_REQUIRED_VERSION=2.18
 PANEL_REQUIRED_VERSION=2.0.0
-INDICATE_REQUIRED_VERSION=0.1
+INDICATE_REQUIRED_VERSION=0.1.5
 
 
 
