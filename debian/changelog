@@ -1,3 +1,47 @@
+indicator-messages (0.2.0~bzr121-0ubuntu1) karmic; urgency=low
+
+  [ Ted Gould ]
+  * debian/control: Adding in a build dep on libindicate-gtk-dev
+  * Changes for the changing libindicate stuff.
+  * Merge in the dbusmenu changes from the dbusmenu branch
+  * debian/control: Adding in a build dependency on libdbusmenu-glib and
+    libdbusmenu-gtk to catch up with the merge.
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Wed, 05 Aug 2009 00:21:50 +0100
+
+indicator-messages (0.2.0~bzr120-0ubuntu1) jaunty; urgency=low
+
+  * Fix to track the timer. (LP: #365187)
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 13 May 2009 09:56:20 -0500
+
+indicator-messages (0.2.0~bzr119-0ubuntu1) jaunty; urgency=low
+
+  * Upstream update
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 22 Apr 2009 23:34:21 -0500
+
+indicator-messages (0.2.0~bzr116-0ubuntu3) jaunty; urgency=low
+
+  * debian/rules: Adding a rule to remove the .la/.a clutter
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 22 Apr 2009 16:46:59 -0500
+
+indicator-messages (0.2.0~bzr116-0ubuntu2) jaunty; urgency=low
+
+  * debian/control: libindicator-dev to ~bzr301
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 22 Apr 2009 15:58:45 -0500
+
+indicator-messages (0.2.0~bzr116-0ubuntu1) jaunty; urgency=low
+
+  * Upstream release
+    * Bug fixes
+    * Update API to new libindicator
+  * debian/control: Adding new dependency on libindicator-dev
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 22 Apr 2009 15:45:21 -0500
+
 indicator-messages (0.1.6-0ubuntu1) jaunty; urgency=low
 
   * New upstream version
