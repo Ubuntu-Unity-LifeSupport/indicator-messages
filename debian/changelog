@@ -1,3 +1,10 @@
+indicator-messages (0.2.0~bzr121-0ubuntu3) karmic; urgency=low
+
+  * Fix to dereference the application menu items correctly so that
+    the signal handlers are dropped as well. (lp: #410251)
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 05 Aug 2009 19:00:31 +0100
+
 indicator-messages (0.2.0~bzr121-0ubuntu2) karmic; urgency=low
 
   * Run autogen.sh before upload
