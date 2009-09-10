@@ -233,6 +233,7 @@ SUBDIRS = \
 	src \
 	data
 
+DISTCHECK_CONFIGURE_FLAGS = --enable-localinstall
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
