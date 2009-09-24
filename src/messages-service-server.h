@@ -53,11 +53,11 @@ G_BEGIN_DECLS
 #endif /* !G_ENABLE_DEBUG */
 
 
-/* NONE:POINTER (/tmp/dbus-binding-tool-c-marshallers.XQORZU:1) */
+/* NONE:POINTER (/tmp/dbus-binding-tool-c-marshallers.CFJW0U:1) */
 #define dbus_glib_marshal__messages_service_server_VOID__POINTER	g_cclosure_marshal_VOID__POINTER
 #define dbus_glib_marshal__messages_service_server_NONE__POINTER	dbus_glib_marshal__messages_service_server_VOID__POINTER
 
-/* BOOLEAN:POINTER,POINTER (/tmp/dbus-binding-tool-c-marshallers.XQORZU:2) */
+/* BOOLEAN:POINTER,POINTER (/tmp/dbus-binding-tool-c-marshallers.CFJW0U:2) */
 extern void dbus_glib_marshal__messages_service_server_BOOLEAN__POINTER_POINTER (GClosure     *closure,
                                                                                  GValue       *return_value,
                                                                                  guint         n_param_values,
