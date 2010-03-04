@@ -2827,7 +2827,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=indicator-messages
- VERSION=0.3.2
+ VERSION=0.3.3
 
 
 cat >>confdefs.h <<_ACEOF
@@ -12956,7 +12956,7 @@ $as_echo "$LINGUAS" >&6; }
 # Files
 ###########################
 
-ac_config_files="$ac_config_files Makefile src/Makefile data/Makefile data/icons/Makefile data/icons/16x16/Makefile data/icons/16x16/status/Makefile data/icons/22x22/Makefile data/icons/22x22/status/Makefile data/icons/24x24/Makefile data/icons/24x24/status/Makefile data/icons/32x32/Makefile data/icons/32x32/status/Makefile data/icons/48x48/Makefile data/icons/48x48/status/Makefile data/icons/scalable/Makefile data/icons/scalable/status/Makefile po/Makefile.in"
+ac_config_files="$ac_config_files Makefile src/Makefile data/Makefile data/icons/Makefile data/icons/16x16/Makefile data/icons/16x16/status/Makefile data/icons/16x16/categories/Makefile data/icons/22x22/Makefile data/icons/22x22/status/Makefile data/icons/22x22/categories/Makefile data/icons/24x24/Makefile data/icons/24x24/status/Makefile data/icons/32x32/Makefile data/icons/32x32/status/Makefile data/icons/32x32/categories/Makefile data/icons/48x48/Makefile data/icons/48x48/status/Makefile data/icons/scalable/Makefile data/icons/scalable/status/Makefile data/icons/scalable/categories/Makefile po/Makefile.in"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -13946,16 +13946,20 @@ do
     "data/icons/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/Makefile" ;;
     "data/icons/16x16/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/16x16/Makefile" ;;
     "data/icons/16x16/status/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/16x16/status/Makefile" ;;
+    "data/icons/16x16/categories/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/16x16/categories/Makefile" ;;
     "data/icons/22x22/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/22x22/Makefile" ;;
     "data/icons/22x22/status/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/22x22/status/Makefile" ;;
+    "data/icons/22x22/categories/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/22x22/categories/Makefile" ;;
     "data/icons/24x24/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/24x24/Makefile" ;;
     "data/icons/24x24/status/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/24x24/status/Makefile" ;;
     "data/icons/32x32/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/32x32/Makefile" ;;
     "data/icons/32x32/status/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/32x32/status/Makefile" ;;
+    "data/icons/32x32/categories/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/32x32/categories/Makefile" ;;
     "data/icons/48x48/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/48x48/Makefile" ;;
     "data/icons/48x48/status/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/48x48/status/Makefile" ;;
     "data/icons/scalable/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/scalable/Makefile" ;;
     "data/icons/scalable/status/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/scalable/status/Makefile" ;;
+    "data/icons/scalable/categories/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/scalable/categories/Makefile" ;;
     "po/Makefile.in") CONFIG_FILES="$CONFIG_FILES po/Makefile.in" ;;
     "po/stamp-it") CONFIG_COMMANDS="$CONFIG_COMMANDS po/stamp-it" ;;
 

@@ -83,6 +83,7 @@ libmessaging_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(LDFLAGS) -o $@
 PROGRAMS = $(libexec_PROGRAMS)
 am_indicator_messages_service_OBJECTS =  \
+	indicator_messages_service-default-applications.$(OBJEXT) \
 	indicator_messages_service-messages-service.$(OBJEXT) \
 	indicator_messages_service-messages-service-dbus.$(OBJEXT) \
 	indicator_messages_service-im-menu-item.$(OBJEXT) \
@@ -290,6 +291,8 @@ libmessaging_la_LDFLAGS = -module -avoid-version
 # Building the messages service
 ######################################
 indicator_messages_service_SOURCES = \
+	default-applications.h \
+	default-applications.c \
 	messages-service.c \
 	messages-service-server.h \
 	messages-service-dbus.c \
@@ -437,6 +440,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_messages_service-app-menu-item.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_messages_service-default-applications.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_messages_service-im-menu-item.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_messages_service-launcher-menu-item.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_messages_service-messages-service-dbus.Po@am__quote@
@@ -474,6 +478,22 @@ libmessaging_la-indicator-messages.lo: indicator-messages.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='indicator-messages.c' object='libmessaging_la-indicator-messages.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmessaging_la_CFLAGS) $(CFLAGS) -c -o libmessaging_la-indicator-messages.lo `test -f 'indicator-messages.c' || echo '$(srcdir)/'`indicator-messages.c
+
+indicator_messages_service-default-applications.o: default-applications.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_messages_service_CFLAGS) $(CFLAGS) -MT indicator_messages_service-default-applications.o -MD -MP -MF $(DEPDIR)/indicator_messages_service-default-applications.Tpo -c -o indicator_messages_service-default-applications.o `test -f 'default-applications.c' || echo '$(srcdir)/'`default-applications.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/indicator_messages_service-default-applications.Tpo $(DEPDIR)/indicator_messages_service-default-applications.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='default-applications.c' object='indicator_messages_service-default-applications.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_messages_service_CFLAGS) $(CFLAGS) -c -o indicator_messages_service-default-applications.o `test -f 'default-applications.c' || echo '$(srcdir)/'`default-applications.c
+
+indicator_messages_service-default-applications.obj: default-applications.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_messages_service_CFLAGS) $(CFLAGS) -MT indicator_messages_service-default-applications.obj -MD -MP -MF $(DEPDIR)/indicator_messages_service-default-applications.Tpo -c -o indicator_messages_service-default-applications.obj `if test -f 'default-applications.c'; then $(CYGPATH_W) 'default-applications.c'; else $(CYGPATH_W) '$(srcdir)/default-applications.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/indicator_messages_service-default-applications.Tpo $(DEPDIR)/indicator_messages_service-default-applications.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='default-applications.c' object='indicator_messages_service-default-applications.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_messages_service_CFLAGS) $(CFLAGS) -c -o indicator_messages_service-default-applications.obj `if test -f 'default-applications.c'; then $(CYGPATH_W) 'default-applications.c'; else $(CYGPATH_W) '$(srcdir)/default-applications.c'; fi`
 
 indicator_messages_service-messages-service.o: messages-service.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_messages_service_CFLAGS) $(CFLAGS) -MT indicator_messages_service-messages-service.o -MD -MP -MF $(DEPDIR)/indicator_messages_service-messages-service.Tpo -c -o indicator_messages_service-messages-service.o `test -f 'messages-service.c' || echo '$(srcdir)/'`messages-service.c
