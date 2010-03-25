@@ -88,7 +88,8 @@ am_indicator_messages_service_OBJECTS =  \
 	indicator_messages_service-messages-service-dbus.$(OBJEXT) \
 	indicator_messages_service-im-menu-item.$(OBJEXT) \
 	indicator_messages_service-app-menu-item.$(OBJEXT) \
-	indicator_messages_service-launcher-menu-item.$(OBJEXT)
+	indicator_messages_service-launcher-menu-item.$(OBJEXT) \
+	indicator_messages_service-seen-db.$(OBJEXT)
 indicator_messages_service_OBJECTS =  \
 	$(am_indicator_messages_service_OBJECTS)
 indicator_messages_service_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -303,6 +304,8 @@ indicator_messages_service_SOURCES = \
 	app-menu-item.h \
 	launcher-menu-item.c \
 	launcher-menu-item.h \
+	seen-db.c \
+	seen-db.h \
 	dirs.h \
 	dbus-data.h
 
@@ -445,6 +448,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_messages_service-launcher-menu-item.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_messages_service-messages-service-dbus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_messages_service-messages-service.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_messages_service-seen-db.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmessaging_la-indicator-messages.Plo@am__quote@
 
 .c.o:
@@ -574,6 +578,22 @@ indicator_messages_service-launcher-menu-item.obj: launcher-menu-item.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='launcher-menu-item.c' object='indicator_messages_service-launcher-menu-item.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_messages_service_CFLAGS) $(CFLAGS) -c -o indicator_messages_service-launcher-menu-item.obj `if test -f 'launcher-menu-item.c'; then $(CYGPATH_W) 'launcher-menu-item.c'; else $(CYGPATH_W) '$(srcdir)/launcher-menu-item.c'; fi`
+
+indicator_messages_service-seen-db.o: seen-db.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_messages_service_CFLAGS) $(CFLAGS) -MT indicator_messages_service-seen-db.o -MD -MP -MF $(DEPDIR)/indicator_messages_service-seen-db.Tpo -c -o indicator_messages_service-seen-db.o `test -f 'seen-db.c' || echo '$(srcdir)/'`seen-db.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/indicator_messages_service-seen-db.Tpo $(DEPDIR)/indicator_messages_service-seen-db.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='seen-db.c' object='indicator_messages_service-seen-db.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_messages_service_CFLAGS) $(CFLAGS) -c -o indicator_messages_service-seen-db.o `test -f 'seen-db.c' || echo '$(srcdir)/'`seen-db.c
+
+indicator_messages_service-seen-db.obj: seen-db.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_messages_service_CFLAGS) $(CFLAGS) -MT indicator_messages_service-seen-db.obj -MD -MP -MF $(DEPDIR)/indicator_messages_service-seen-db.Tpo -c -o indicator_messages_service-seen-db.obj `if test -f 'seen-db.c'; then $(CYGPATH_W) 'seen-db.c'; else $(CYGPATH_W) '$(srcdir)/seen-db.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/indicator_messages_service-seen-db.Tpo $(DEPDIR)/indicator_messages_service-seen-db.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='seen-db.c' object='indicator_messages_service-seen-db.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_messages_service_CFLAGS) $(CFLAGS) -c -o indicator_messages_service-seen-db.obj `if test -f 'seen-db.c'; then $(CYGPATH_W) 'seen-db.c'; else $(CYGPATH_W) '$(srcdir)/seen-db.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
