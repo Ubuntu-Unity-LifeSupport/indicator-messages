@@ -1,3 +1,17 @@
+indicator-messages (0.4.92-0ubuntu1) oneiric; urgency=low
+
+  * New upstream release.
+  * debian/control
+    - Added Replaces indicator-me
+    - Added build depends for libtelepathy-glib-dev
+    - Added new binary packages, libindicator-messages-status-provider-dev,
+      libindicator-messages-status-provider1, and each provider
+    - Make indicator-messages recommend indicator-status-provider-mc5
+  * debian/libindicator-messages-status-provider1.symbols
+    - Added symbols file
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Thu, 14 Jul 2011 16:28:23 -0400
+
 indicator-messages (0.4.91-0ubuntu1) oneiric; urgency=low
 
   [ Ted Gould ]
