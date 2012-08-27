@@ -1,3 +1,21 @@
+indicator-messages (12.10.1-0ubuntu1) quantal-proposed; urgency=low
+
+  * New upstream version
+  * debian/control:
+    - breaks on version of ported clients using libindicate
+    - set some conflicts on the old deprecated status provider binaries
+    - updated Build-Depends
+  * debian/control, debian/*.install:
+    - drop indicator-status-provider-*, those are deprecated
+    - new binaries for the libmessaging-menu library
+  * debian/libmessaging-menu0.symbols:
+    - symbol file for the new library
+  * Updated packaging to dh9, current standards
+  * Drop gtk2 build from the packaging since support for it was 
+    dropped in trunk, thanks Lars Uebernickel
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Mon, 27 Aug 2012 18:56:59 +0200
+
 indicator-messages (0.6.0-0ubuntu1) precise; urgency=low
 
   * New upstream release.
