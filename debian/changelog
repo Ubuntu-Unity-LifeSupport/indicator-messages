@@ -1,3 +1,23 @@
+indicator-messages (12.10.6daily12.11.21.1-0ubuntu1) raring; urgency=low
+
+  [ Mathieu Trudel-Lapierre ]
+  * debian/rules:
+    - Use autogen.sh for dh_autoreconf.
+    - Drop the override for dh_makeshlibs.
+    - Add DPKG_GENSYMBOLS_CHECK_LEVEL=4.
+  * debian/control:
+    - Fix styling: add trailing commas at the end of lists. 
+    - Update Vcs-Bzr, Vcs-Browser fields and add a notice for developers.
+    - Add libgtest-dev to Build-Depends.
+  * Automatic snapshot from revision 329 (bootstrap):
+    - Clear the detail (count or time) of a source when another type of detail
+      is set. (LP: #1071640)
+
+  [ Automatic PS uploader ]
+  * Automatic snapshot from revision 331
+
+ -- Automatic PS uploader <ps-jenkins@lists.canonical.com>  Wed, 21 Nov 2012 10:41:37 +0000
+
 indicator-messages (12.10.5-0ubuntu2) raring; urgency=low
 
   * Upload to raring
