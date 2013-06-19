@@ -19,6 +19,7 @@ Build-Depends: debhelper (>= 9),
                libgirepository1.0-dev (>= 0.9.12),
                gtk-doc-tools,
                libgtest-dev,
+               python3-dbusmock,
 Standards-Version: 3.9.3
 Homepage: https://launchpad.net/indicator-messages
 # If you aren't a member of ~indicator-applet-developers but need to upload
@@ -68,6 +69,7 @@ Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         gir1.2-messagingmenu-1.0 (=${binary:Version}),
          libmessaging-menu0 (=${binary:Version}),
          libglib2.0-dev,
 Description: Messaging Menu - library development files
@@ -75,7 +77,7 @@ Description: Messaging Menu - library development files
  the messaging menu.
 
 Package: gir1.2-messagingmenu-1.0
-Section: libs
+Section: introspection
 Architecture: any
 Depends: ${misc:Depends},
          ${gir:Depends},
