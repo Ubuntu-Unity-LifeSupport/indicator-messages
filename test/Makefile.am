@@ -38,8 +38,8 @@ noinst_LTLIBRARIES = \
 	libindicator-messages-service.la
 
 libindicator_messages_service_la_SOURCES = \
-	$(top_builddir)/src/indicator-messages-service.c \
-	$(top_builddir)/src/indicator-messages-service.h \
+	$(top_builddir)/common/indicator-messages-service.c \
+	$(top_builddir)/common/indicator-messages-service.h \
 	$(top_srcdir)/src/app-section.c \
 	$(top_srcdir)/src/app-section.h \
 	$(top_srcdir)/src/gactionmuxer.c \
@@ -53,11 +53,12 @@ libindicator_messages_service_la_CFLAGS = \
 	$(APPLET_CFLAGS) \
 	$(COVERAGE_CFLAGS) \
 	-I$(top_builddir)/src \
+	-I$(top_builddir)/common \
 	-Wall \
 	-Wl,-Bsymbolic-functions \
 	-Wl,-z,defs \
 	-Wl,--as-needed \
-	-Werror \
+	-Werror -Wno-error=deprecated-declarations \
 	-DG_LOG_DOMAIN=\"Indicator-Messages\"
 
 libindicator_messages_service_la_LIBADD = \
