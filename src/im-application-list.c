@@ -223,6 +223,8 @@ app_source_action_check_draw (Application * app, const gchar * action_name)
   GVariant * draw;
 
   state = g_action_group_get_action_state (G_ACTION_GROUP(app->source_actions), action_name);
+  if (state == NULL)
+    return FALSE;
 
   /* uxsb */
   draw = g_variant_get_child_value(state, 3);
@@ -474,11 +476,12 @@ im_application_list_class_init (ImApplicationListClass *klass)
                                           NULL, NULL,
                                           g_cclosure_marshal_generic,
                                           G_TYPE_NONE,
-                                          4,
+                                          5,
                                           G_TYPE_STRING,
                                           G_TYPE_STRING,
                                           G_TYPE_STRING,
-                                          G_TYPE_STRING);
+                                          G_TYPE_STRING,
+                                          G_TYPE_BOOLEAN);
 
   signals[SOURCE_REMOVED] = g_signal_new ("source-removed",
                                           IM_TYPE_APPLICATION_LIST,
@@ -537,7 +540,7 @@ im_application_list_class_init (ImApplicationListClass *klass)
                                        G_SIGNAL_RUN_FIRST,
                                        0,
                                        NULL, NULL,
-                                       g_cclosure_marshal_VOID__OBJECT,
+                                       g_cclosure_marshal_VOID__STRING,
                                        G_TYPE_NONE,
                                        1,
                                        G_TYPE_STRING);
@@ -804,6 +807,7 @@ im_application_list_source_changed (Application *app,
   const gchar *string;
   gboolean draws_attention;
   gboolean old_draw;
+  gboolean visible;
 
   g_variant_get (source, "(&s&s&sux&sb)",
                  &id, &label, &iconstr, &count, &time, &string, &draws_attention);
@@ -813,9 +817,11 @@ im_application_list_source_changed (Application *app,
   g_action_group_change_action_state (G_ACTION_GROUP (app->source_actions), id,
                                       g_variant_new ("(uxsb)", count, time, string, draws_attention));
 
-  g_signal_emit (app->list, signals[SOURCE_CHANGED], 0, app->id, id, label, iconstr);
+  visible = count > 0;
 
-  if (!old_draw && draws_attention)
+  g_signal_emit (app->list, signals[SOURCE_CHANGED], 0, app->id, id, label, iconstr, visible);
+
+  if (visible && !old_draw && draws_attention)
     app->draws_attention = TRUE;
 
   im_application_list_update_draws_attention (app->list);
