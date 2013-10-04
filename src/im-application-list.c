@@ -159,7 +159,7 @@ im_application_list_update_draws_attention (ImApplicationList *list)
 {
   const gchar *base_icon_name;
   const gchar *accessible_name;
-  const gchar *icon_name;
+  gchar *icon_name;
   GIcon * icon;
   GVariant *serialized_icon;
   GVariantBuilder builder;
@@ -184,6 +184,7 @@ im_application_list_update_draws_attention (ImApplicationList *list)
 
   /* icon */
   icon = g_themed_icon_new_with_default_fallbacks(icon_name);
+  g_free(icon_name);
   if ((serialized_icon = g_icon_serialize(icon)))
     {
       g_variant_builder_add (&builder, "{sv}", "icon", serialized_icon);
@@ -192,7 +193,7 @@ im_application_list_update_draws_attention (ImApplicationList *list)
   g_object_unref(icon);
 
   /* title */
-  g_variant_builder_add (&builder, "{sv}", "title", g_variant_new_string (_("Messages")));
+  g_variant_builder_add (&builder, "{sv}", "title", g_variant_new_string (_("Incoming")));
 
   /* accessible description */
   g_variant_builder_open(&builder, G_VARIANT_TYPE_DICT_ENTRY);
@@ -485,7 +486,7 @@ im_application_list_class_init (ImApplicationListClass *klass)
                                           G_TYPE_STRING,
                                           G_TYPE_STRING,
                                           G_TYPE_STRING,
-                                          G_TYPE_STRING,
+                                          G_TYPE_VARIANT,
                                           G_TYPE_BOOLEAN);
 
   signals[SOURCE_REMOVED] = g_signal_new ("source-removed",
@@ -675,8 +676,8 @@ im_application_list_add (ImApplicationList  *list,
   GSimpleAction *launch_action;
   IndicatorDesktopShortcuts * shortcuts = NULL;
 
-  g_return_if_fail (IM_IS_APPLICATION_LIST (list));
-  g_return_if_fail (desktop_id != NULL);
+  g_return_val_if_fail (IM_IS_APPLICATION_LIST (list), FALSE);
+  g_return_val_if_fail (desktop_id != NULL, FALSE);
 
   if (im_application_list_lookup (list, desktop_id))
     return TRUE;
@@ -689,7 +690,7 @@ im_application_list_add (ImApplicationList  *list,
     }
 
   id = g_app_info_get_id (G_APP_INFO (info));
-  g_return_if_fail (id != NULL);
+  g_return_val_if_fail (id != NULL, FALSE);
 
   {
     const char * filename = g_desktop_app_info_get_filename(info);
