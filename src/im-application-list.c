@@ -934,7 +934,7 @@ im_application_list_message_added (Application *app,
                  &id, &maybe_serialized_icon, &title, &subtitle, &body, &time, &action_iter, &draws_attention);
 
   if (g_variant_n_children (maybe_serialized_icon) == 1)
-    serialized_icon = g_variant_get_child_value (maybe_serialized_icon, 0);
+    g_variant_get_child (maybe_serialized_icon, 0, "v", &serialized_icon);
 
   action = g_simple_action_new (id, G_VARIANT_TYPE_BOOLEAN);
   g_object_set_qdata(G_OBJECT(action), message_action_draws_attention_quark(), GINT_TO_POINTER(draws_attention));
@@ -1163,9 +1163,12 @@ im_application_list_set_remote (ImApplicationList *list,
 
       if (app->proxy)
         name_owner = g_dbus_proxy_get_name_owner (G_DBUS_PROXY (app->proxy));
-      g_warning ("replacing '%s' at %s with %s", id, name_owner, unique_bus_name);
 
-      im_application_list_unset_remote (app);
+      if (g_strcmp0 (name_owner, unique_bus_name) != 0)
+        {
+          g_warning ("replacing '%s' at %s with %s", id, name_owner, unique_bus_name);
+          im_application_list_unset_remote (app);
+        }
 
       g_free (name_owner);
     }
