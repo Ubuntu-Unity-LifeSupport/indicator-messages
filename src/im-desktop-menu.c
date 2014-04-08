@@ -27,10 +27,68 @@ struct _ImDesktopMenu
 {
   ImMenu parent;
 
+  gboolean status_section_visible;
+  GMenu *default_chat_client_section;
+  GMenu *default_mail_client_section;
   GHashTable *source_sections;
 };
 
 G_DEFINE_TYPE (ImDesktopMenu, im_desktop_menu, IM_TYPE_MENU);
+
+static void
+menu_append_status (GMenu       *menu,
+                    const gchar *label,
+                    const gchar *detailed_action,
+                    const gchar *icon_name)
+{
+  GMenuItem *item;
+  GIcon *icon;
+
+  icon = g_themed_icon_new (icon_name);
+
+  item = g_menu_item_new (label, detailed_action);
+  g_menu_item_set_icon (item, icon);
+  g_menu_append_item (menu, item);
+
+  g_object_unref (icon);
+  g_object_unref (item);
+}
+
+static void
+im_desktop_menu_show_chat_section (ImDesktopMenu *menu)
+{
+  GMenu *status_section;
+
+  if (menu->status_section_visible)
+    return;
+
+  status_section = g_menu_new ();
+
+  menu_append_status (status_section, _("Available"), "indicator.status::available", "user-available");
+  menu_append_status (status_section, _("Away"),      "indicator.status::away",      "user-away");
+  menu_append_status (status_section, _("Busy"),      "indicator.status::busy",      "user-busy");
+  menu_append_status (status_section, _("Invisible"), "indicator.status::invisible", "user-invisible");
+  menu_append_status (status_section, _("Offline"),   "indicator.status::offline",   "user-offline");
+
+  im_menu_prepend_section (IM_MENU (menu), G_MENU_MODEL (status_section));
+  menu->status_section_visible = TRUE;
+
+  g_object_unref (status_section);
+}
+
+static gboolean
+g_app_info_is_default_for_uri_scheme (GAppInfo    *info,
+                                      const gchar *uri_scheme)
+{
+  GAppInfo *default_info;
+  gboolean is_default;
+
+  default_info = g_app_info_get_default_for_uri_scheme (uri_scheme);
+  is_default = g_app_info_equal (info, default_info);
+
+  g_object_unref (default_info);
+  return is_default;
+}
 
 static void
 im_desktop_menu_app_added (ImApplicationList *applist,
@@ -43,6 +101,7 @@ im_desktop_menu_app_added (ImApplicationList *applist,
   GMenu *app_section;
   GMenu *source_section;
   gchar *namespace;
+  GMenuItem *item;
 
   app_section = g_menu_new ();
 
@@ -94,17 +153,42 @@ im_desktop_menu_app_added (ImApplicationList *applist,
     g_clear_object(&shortcuts);
   }
 
+  if (g_desktop_app_info_get_boolean (app_info, "X-MessagingMenu-UsesChatSection"))
+    im_desktop_menu_show_chat_section (menu);
+
   source_section = g_menu_new ();
 
   section = g_menu_new ();
   g_menu_append_section (section, NULL, G_MENU_MODEL (app_section));
   g_menu_append_section (section, NULL, G_MENU_MODEL (source_section));
 
+  item = g_menu_item_new_section (NULL, G_MENU_MODEL (section));
+
   namespace = g_strconcat ("indicator.", app_id, NULL);
-  im_menu_insert_section (IM_MENU (menu), g_app_info_get_name(G_APP_INFO(app_info)), namespace, G_MENU_MODEL (section));
+  g_menu_item_set_attribute (item, "action-namespace", "s", namespace);
+
+  /* The default chat client is not stored anywhere, so let's hardcode empathy. */
+  if (g_str_equal (app_id, "empathy"))
+    {
+      g_menu_remove_all (menu->default_chat_client_section);
+      g_menu_append_item (menu->default_chat_client_section, item);
+    }
+  else if (g_app_info_is_default_for_uri_scheme (G_APP_INFO (app_info), "mailto"))
+    {
+      g_menu_remove_all (menu->default_mail_client_section);
+      g_menu_append_item (menu->default_mail_client_section, item);
+    }
+  else
+    {
+      g_menu_item_set_attribute (item, "x-messaging-menu-sort-string", "s",
+                                 g_app_info_get_name(G_APP_INFO(app_info)));
+      im_menu_insert_item_sorted (IM_MENU (menu), item, menu->status_section_visible ? 3 : 2, -1);
+    }
+
   g_hash_table_insert (menu->source_sections, g_strdup (app_id), source_section);
 
   g_free (namespace);
+  g_object_unref (item);
   g_object_unref (section);
   g_object_unref (app_section);
 }
@@ -261,60 +345,17 @@ im_desktop_menu_app_stopped (ImApplicationList *applist,
     g_menu_remove (section, 0);
 }
 
-static GMenu *
-create_status_section (void)
-{
-	GMenu *menu;
-	GMenuItem *item;
-	struct status_item {
-		gchar *label;
-		gchar *action;
-		gchar *icon_name;
-	} status_items[] = {
-		{ _("Available"), "indicator.status::available", "user-available" },
-		{ _("Away"),      "indicator.status::away",      "user-away" },
-		{ _("Busy"),      "indicator.status::busy",      "user-busy" },
-		{ _("Invisible"), "indicator.status::invisible", "user-invisible" },
-		{ _("Offline"),   "indicator.status::offline",   "user-offline" }
-	};
-	int i;
-
-	menu = g_menu_new ();
-
-	item = g_menu_item_new (NULL, NULL);
-
-	for (i = 0; i < G_N_ELEMENTS (status_items); i++) {
-		GIcon *icon;
-
-		g_menu_item_set_label (item, status_items[i].label);
-		g_menu_item_set_detailed_action (item, status_items[i].action);
-
-		icon = g_themed_icon_new (status_items[i].icon_name);
-		g_menu_item_set_icon (item, icon);
-
-		g_menu_append_item (menu, item);
-
-		g_object_unref (icon);
-	}
-
-	g_object_unref (item);
-	return menu;
-}
-
 static void
 im_desktop_menu_constructed (GObject *object)
 {
   ImDesktopMenu *menu = IM_DESKTOP_MENU (object);
   ImApplicationList *applist;
 
-  {
-    GMenu *status_section;
+  menu->default_chat_client_section = g_menu_new ();
+  im_menu_append_section (IM_MENU (menu), G_MENU_MODEL (menu->default_chat_client_section));
 
-    status_section = create_status_section();
-    im_menu_append_section (IM_MENU (menu), G_MENU_MODEL (status_section));
-
-    g_object_unref (status_section);
-  }
+  menu->default_mail_client_section = g_menu_new ();
+  im_menu_append_section (IM_MENU (menu), G_MENU_MODEL (menu->default_mail_client_section));
 
   {
     GMenu *clear_section;
