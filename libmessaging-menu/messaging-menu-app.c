@@ -25,7 +25,7 @@
 #include <string.h>
 
 /**
- * SECTION:messaging-menu
+ * SECTION:messaging-menu-app
  * @title: MessagingMenuApp
  * @short_description: An application section in the messaging menu
  * @include: messaging-menu.h
@@ -207,7 +207,7 @@ messaging_menu_app_get_dbus_object_path (MessagingMenuApp *app)
                       g_app_info_get_id (G_APP_INFO (app->appinfo)),
                       NULL);
 
-  g_strcanon (path, "/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", '_');
+  g_strcanon (path, "/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", '_');
 
   return path;
 }
