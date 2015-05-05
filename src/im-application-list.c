@@ -352,8 +352,8 @@ im_application_list_source_removed_action (Application *app,
   g_action_map_remove_action (G_ACTION_MAP(app->source_actions), action_name);
   g_signal_emit (app->list, signals[SOURCE_REMOVED], 0, app->id, action_name);
 
-  if (application_update_draws_attention(app))
-    im_application_list_update_root_action (app->list);
+  application_update_draws_attention (app);
+  im_application_list_update_root_action (app->list);
 }
 
 /* Remove a source from an application, signal up and update the status
@@ -410,8 +410,8 @@ im_application_list_message_removed_action (Application *app,
   g_action_map_remove_action (G_ACTION_MAP(app->message_actions), action_name);
   g_action_muxer_remove (app->message_sub_actions, action_name);
 
-  if (application_update_draws_attention(app))
-    im_application_list_update_root_action (app->list);
+  application_update_draws_attention (app);
+  im_application_list_update_root_action (app->list);
 
   g_signal_emit (app->list, signals[MESSAGE_REMOVED], 0, app->id, action_name);
 }
@@ -522,10 +522,26 @@ im_application_list_remove_all (GSimpleAction *action,
 
       if (app->proxy != NULL) /* If it is remote, we tell the app we've cleared */
         {
+          guint i;
+          gchar **unescaped_source_actions;
+          gchar **unescaped_message_actions;
+
+          /* Unescape action names */
+          unescaped_source_actions = g_new0 (gchar *, g_strv_length (source_actions) + 1);
+          for (i = 0; source_actions[i]; i++)
+            unescaped_source_actions[i] = unescape_action_name (source_actions[i]);
+
+          unescaped_message_actions = g_new0 (gchar *, g_strv_length (message_actions) + 1);
+          for (i = 0; message_actions[i]; i++)
+            unescaped_message_actions[i] = unescape_action_name (message_actions[i]);
+
           indicator_messages_application_call_dismiss (app->proxy, 
-                                                       (const gchar * const *) source_actions,
-                                                       (const gchar * const *) message_actions,
+                                                       (const gchar * const *) unescaped_source_actions,
+                                                       (const gchar * const *) unescaped_message_actions,
                                                        app->cancellable, NULL, NULL);
+
+          g_strfreev (unescaped_source_actions);
+          g_strfreev (unescaped_message_actions);
         }
 
       g_strfreev (source_actions);
@@ -912,10 +928,9 @@ im_application_list_source_added (Application *app,
   g_signal_emit (app->list, signals[SOURCE_ADDED], 0, app->id, action_name, label, serialized_icon, visible);
 
   if (visible && draws_attention && app->draws_attention == FALSE)
-    {
-      app->draws_attention = TRUE;
-      im_application_list_update_root_action (app->list);
-    }
+    app->draws_attention = TRUE;
+
+  im_application_list_update_root_action (app->list);
 
   g_free (action_name);
   g_object_unref (action);
@@ -954,8 +969,8 @@ im_application_list_source_changed (Application *app,
 
   g_signal_emit (app->list, signals[SOURCE_CHANGED], 0, app->id, action_name, label, serialized_icon, visible);
 
-  if (application_update_draws_attention (app))
-    im_application_list_update_root_action (app->list);
+  application_update_draws_attention (app);
+  im_application_list_update_root_action (app->list);
 
   if (serialized_icon)
     g_variant_unref (serialized_icon);
