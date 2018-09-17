@@ -25,6 +25,7 @@ class AccountsServiceMock
 		DbusTestDbusMock * mock = nullptr;
 		DbusTestDbusMockObject * soundobj = nullptr;
 		DbusTestDbusMockObject * userobj = nullptr;
+		DbusTestDbusMockObject * dmobj = nullptr;
 		DbusTestDbusMockObject * syssoundobj = nullptr;
 		DbusTestDbusMockObject * privacyobj = nullptr;
 
@@ -56,9 +57,11 @@ class AccountsServiceMock
 			dbus_test_dbus_mock_object_add_property(mock, userobj,
 				"UserName", G_VARIANT_TYPE_STRING,
 				g_variant_new_string(g_get_user_name()), NULL);
-			dbus_test_dbus_mock_object_add_method(mock, baseobj,
-				"SetXHasMessages", G_VARIANT_TYPE_BOOLEAN, nullptr,
-				"", NULL);
+
+			dmobj = dbus_test_dbus_mock_get_object(mock, "/user", "org.freedesktop.DisplayManager.AccountsService", NULL);
+			dbus_test_dbus_mock_object_add_property(mock, dmobj,
+				"HasMesages", G_VARIANT_TYPE_BOOLEAN,
+				g_variant_new_boolean(FALSE), NULL);
 
 			soundobj = dbus_test_dbus_mock_get_object(mock, "/user", "com.canonical.indicator.sound.AccountsService", NULL);
 			dbus_test_dbus_mock_object_add_property(mock, soundobj,

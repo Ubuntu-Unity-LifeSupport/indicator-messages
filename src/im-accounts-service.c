@@ -189,9 +189,9 @@ im_accounts_service_set_draws_attention (ImAccountsService * service, gboolean d
 	g_dbus_connection_call(g_dbus_proxy_get_connection(priv->touch_settings),
 		g_dbus_proxy_get_name(priv->touch_settings),
 		g_dbus_proxy_get_object_path(priv->touch_settings),
-		"org.freedesktop.Accounts.User",
-		"SetXHasMessages",
-		g_variant_new("(b)", draws_attention),
+		"org.freedesktop.DBus.Properties",
+		"Set",
+		g_variant_new("(ssv)", "org.freedesktop.DisplayManager.AccountsService", "HasMessages", g_variant_new_boolean (draws_attention)),
 		NULL, /* reply */
 		G_DBUS_CALL_FLAGS_NONE,
 		-1, /* timeout */

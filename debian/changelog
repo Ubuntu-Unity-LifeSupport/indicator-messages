@@ -1,3 +1,11 @@
+indicator-messages (13.10.1+17.04.20170120-0ubuntu3) cosmic; urgency=medium
+
+  [ Robert Ancell ]
+  * Use standard HasMessages extension in AccountsService instead of 
+    Ubuntu-specific XHasMessages patch.
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Mon, 17 Sep 2018 17:00:57 +0200
+
 indicator-messages (13.10.1+17.04.20170120-0ubuntu2) artful; urgency=medium
 
   * debian/control: use 'X-Ubuntu-Use-Langpack: yes' since the indicator
