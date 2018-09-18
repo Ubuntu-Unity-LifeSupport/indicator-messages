@@ -1,3 +1,10 @@
+indicator-messages (13.10.1+18.10.20180918-0ubuntu1) cosmic; urgency=medium
+
+  [ Sebastien Bacher ]
+  * Update tests to include symbolic icons
+
+ -- Marco Trevisan (Treviño) <mail@3v1n0.net>  Tue, 18 Sep 2018 15:11:42 +0000
+
 indicator-messages (13.10.1+17.04.20170120-0ubuntu3) cosmic; urgency=medium
 
   [ Robert Ancell ]
