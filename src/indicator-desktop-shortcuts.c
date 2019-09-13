@@ -60,9 +60,6 @@ enum {
 	PROP_IDENTITY
 };
 
-#define INDICATOR_DESKTOP_SHORTCUTS_GET_PRIVATE(o) \
-		(G_TYPE_INSTANCE_GET_PRIVATE ((o), INDICATOR_TYPE_DESKTOP_SHORTCUTS, IndicatorDesktopShortcutsPrivate))
-
 static void indicator_desktop_shortcuts_class_init (IndicatorDesktopShortcutsClass *klass);
 static void indicator_desktop_shortcuts_init       (IndicatorDesktopShortcuts *self);
 static void indicator_desktop_shortcuts_dispose    (GObject *object);
@@ -72,15 +69,13 @@ static void get_property (GObject * object, guint prop_id, GValue * value, GPara
 static void parse_keyfile (IndicatorDesktopShortcuts * ids);
 static gboolean should_show (GKeyFile * keyfile, const gchar * group, const gchar * identity, gboolean should_have_target);
 
-G_DEFINE_TYPE (IndicatorDesktopShortcuts, indicator_desktop_shortcuts, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE (IndicatorDesktopShortcuts, indicator_desktop_shortcuts, G_TYPE_OBJECT);
 
 /* Build up the class */
 static void
 indicator_desktop_shortcuts_class_init (IndicatorDesktopShortcutsClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	g_type_class_add_private (klass, sizeof (IndicatorDesktopShortcutsPrivate));
 
 	object_class->dispose = indicator_desktop_shortcuts_dispose;
 	object_class->finalize = indicator_desktop_shortcuts_finalize;
@@ -109,7 +104,7 @@ indicator_desktop_shortcuts_class_init (IndicatorDesktopShortcutsClass *klass)
 static void
 indicator_desktop_shortcuts_init (IndicatorDesktopShortcuts *self)
 {
-	IndicatorDesktopShortcutsPrivate * priv = INDICATOR_DESKTOP_SHORTCUTS_GET_PRIVATE(self);
+	IndicatorDesktopShortcutsPrivate * priv = indicator_desktop_shortcuts_get_instance_private(self);
 
 	priv->keyfile = NULL;
 	priv->identity = NULL;
@@ -124,7 +119,8 @@ indicator_desktop_shortcuts_init (IndicatorDesktopShortcuts *self)
 static void
 indicator_desktop_shortcuts_dispose (GObject *object)
 {
-	IndicatorDesktopShortcutsPrivate * priv = INDICATOR_DESKTOP_SHORTCUTS_GET_PRIVATE(object);
+	IndicatorDesktopShortcuts *shortcuts = INDICATOR_DESKTOP_SHORTCUTS(object);
+	IndicatorDesktopShortcutsPrivate * priv = indicator_desktop_shortcuts_get_instance_private(shortcuts);
 
 	if (priv->keyfile) {
 		g_key_file_free(priv->keyfile);
@@ -139,7 +135,8 @@ indicator_desktop_shortcuts_dispose (GObject *object)
 static void
 indicator_desktop_shortcuts_finalize (GObject *object)
 {
-	IndicatorDesktopShortcutsPrivate * priv = INDICATOR_DESKTOP_SHORTCUTS_GET_PRIVATE(object);
+	IndicatorDesktopShortcuts *shortcuts = INDICATOR_DESKTOP_SHORTCUTS(object);
+	IndicatorDesktopShortcutsPrivate * priv = indicator_desktop_shortcuts_get_instance_private(shortcuts);
 
 	if (priv->identity != NULL) {
 		g_free(priv->identity);
@@ -170,7 +167,8 @@ static void
 set_property (GObject * object, guint prop_id, const GValue * value, GParamSpec * pspec)
 {
 	g_return_if_fail(INDICATOR_IS_DESKTOP_SHORTCUTS(object));
-	IndicatorDesktopShortcutsPrivate * priv = INDICATOR_DESKTOP_SHORTCUTS_GET_PRIVATE(object);
+	IndicatorDesktopShortcuts *shortcuts = INDICATOR_DESKTOP_SHORTCUTS(object);
+	IndicatorDesktopShortcutsPrivate * priv = indicator_desktop_shortcuts_get_instance_private(shortcuts);
 
 	switch(prop_id) {
 	case PROP_DESKTOP_FILE: {
@@ -233,7 +231,8 @@ static void
 get_property (GObject * object, guint prop_id, GValue * value, GParamSpec * pspec)
 {
 	g_return_if_fail(INDICATOR_IS_DESKTOP_SHORTCUTS(object));
-	IndicatorDesktopShortcutsPrivate * priv = INDICATOR_DESKTOP_SHORTCUTS_GET_PRIVATE(object);
+	IndicatorDesktopShortcuts *shortcuts = INDICATOR_DESKTOP_SHORTCUTS(object);
+	IndicatorDesktopShortcutsPrivate * priv = indicator_desktop_shortcuts_get_instance_private(shortcuts);
 
 	switch(prop_id) {
 	case PROP_IDENTITY:
@@ -253,7 +252,7 @@ get_property (GObject * object, guint prop_id, GValue * value, GParamSpec * pspe
 static void
 parse_keyfile (IndicatorDesktopShortcuts * ids)
 {
-	IndicatorDesktopShortcutsPrivate * priv = INDICATOR_DESKTOP_SHORTCUTS_GET_PRIVATE(ids);
+	IndicatorDesktopShortcutsPrivate * priv = indicator_desktop_shortcuts_get_instance_private(ids);
 
 	if (priv->keyfile == NULL) {
 		return;
@@ -475,7 +474,7 @@ const gchar **
 indicator_desktop_shortcuts_get_nicks (IndicatorDesktopShortcuts * ids)
 {
 	g_return_val_if_fail(INDICATOR_IS_DESKTOP_SHORTCUTS(ids), NULL);
-	IndicatorDesktopShortcutsPrivate * priv = INDICATOR_DESKTOP_SHORTCUTS_GET_PRIVATE(ids);
+	IndicatorDesktopShortcutsPrivate * priv = indicator_desktop_shortcuts_get_instance_private(ids);
 	return (const gchar **)priv->nicks->data;
 }
 
@@ -497,7 +496,7 @@ gchar *
 indicator_desktop_shortcuts_nick_get_name (IndicatorDesktopShortcuts * ids, const gchar * nick)
 {
 	g_return_val_if_fail(INDICATOR_IS_DESKTOP_SHORTCUTS(ids), NULL);
-	IndicatorDesktopShortcutsPrivate * priv = INDICATOR_DESKTOP_SHORTCUTS_GET_PRIVATE(ids);
+	IndicatorDesktopShortcutsPrivate * priv = indicator_desktop_shortcuts_get_instance_private(ids);
 
 	g_return_val_if_fail(priv->actions != ACTIONS_NONE, NULL);
 	g_return_val_if_fail(priv->keyfile != NULL, NULL);
@@ -573,7 +572,7 @@ indicator_desktop_shortcuts_nick_exec_with_context (IndicatorDesktopShortcuts * 
 	GError * error = NULL;
 
 	g_return_val_if_fail(INDICATOR_IS_DESKTOP_SHORTCUTS(ids), FALSE);
-	IndicatorDesktopShortcutsPrivate * priv = INDICATOR_DESKTOP_SHORTCUTS_GET_PRIVATE(ids);
+	IndicatorDesktopShortcutsPrivate * priv = indicator_desktop_shortcuts_get_instance_private(ids);
 
 	g_return_val_if_fail(priv->actions != ACTIONS_NONE, FALSE);
 	g_return_val_if_fail(priv->keyfile != NULL, FALSE);

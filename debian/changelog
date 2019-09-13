@@ -1,3 +1,11 @@
+indicator-messages (13.10.1+18.10.20180918-0ubuntu2) eoan; urgency=medium
+
+  * src/im-accounts-service.c, src/indicator-desktop-shortcuts.c: 
+    - don't use deprecated g_type_class_add_private, fix the build with the
+      current libglib version (lp: #1843740)
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Fri, 13 Sep 2019 11:30:08 +0200
+
 indicator-messages (13.10.1+18.10.20180918-0ubuntu1) cosmic; urgency=medium
 
   [ Sebastien Bacher ]
