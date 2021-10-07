@@ -1,3 +1,9 @@
+indicator-messages (13.10.1+18.10.20180918-0ubuntu3) impish; urgency=medium
+
+  * No-change rebuild to build packages with zstd compression.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Oct 2021 12:12:57 +0200
+
 indicator-messages (13.10.1+18.10.20180918-0ubuntu2) eoan; urgency=medium
 
   * src/im-accounts-service.c, src/indicator-desktop-shortcuts.c: 
