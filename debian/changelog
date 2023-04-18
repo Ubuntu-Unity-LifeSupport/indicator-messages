@@ -1,3 +1,11 @@
+indicator-messages (13.10.1+18.10.20180918-0ubuntu4) lunar; urgency=medium
+
+  * src/im-accounts-service.c:
+    - backport fixes proposed by Marco Trevisan to resolve referencing
+      issues leading to segfaults (lp: #2015962)
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Tue, 18 Apr 2023 20:55:49 +0200
+
 indicator-messages (13.10.1+18.10.20180918-0ubuntu3) impish; urgency=medium
 
   * No-change rebuild to build packages with zstd compression.
