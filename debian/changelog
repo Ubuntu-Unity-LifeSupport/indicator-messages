@@ -1,3 +1,17 @@
+indicator-messages (13.10.1+18.10.20180918-0ubuntu5) lunar; urgency=medium
+
+  * debian/conrol, debian/*.install: drop the libmessaging-menu0,
+    libmessaging-menu-dev and gir1.2-messagingmenu-1.0 binary packages. Those
+    are built and provided by ayatana-indicator-messages and cannot
+    realistically be published to the archive during builds right now. They
+    have been removed from the archive already when copied-forward.
+  * debian/rules: change --fail-missing to --list-missing so that we don't
+    fail when we don't install all the built files. Remove unneeded removal
+    of *.la files as we don't install the library bits anymore.
+  * debian/rules: make sure dh_auto_install does what it's supposed to.
+
+ -- Łukasz 'sil2100' Zemczak <lukasz.zemczak@ubuntu.com>  Wed, 19 Apr 2023 16:55:12 +0100
+
 indicator-messages (13.10.1+18.10.20180918-0ubuntu4) lunar; urgency=medium
 
   * src/im-accounts-service.c:
