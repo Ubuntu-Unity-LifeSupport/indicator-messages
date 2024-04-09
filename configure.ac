@@ -89,7 +89,8 @@ AC_ARG_ENABLE([tests],
     [AS_HELP_STRING([--disable-tests], [Disable test scripts and tools (default=auto)])],
     [enable_tests=${enableval}],
     [enable_tests=auto])
-if test "x$enable_tests" != "xno"; then
+# Disable tests as googletest now requires C++14
+if false; then # test "x$enable_tests" != "xno"; then
     m4_include([m4/gtest.m4])
     CHECK_GTEST
     AM_PATH_PYTHON(3.0,, [:])
