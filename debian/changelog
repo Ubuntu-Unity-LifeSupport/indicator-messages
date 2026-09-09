@@ -1,3 +1,10 @@
+indicator-messages (13.10.1+18.10.20180918-0ubuntu8) stonking; urgency=medium
+
+  * Rebuild for accountsservice transition.
+  * d/control: use systemd-dev to get systemd pkg-config file. (LP: #2166912)
+
+ -- Zineb Zaadoud <zineb.zaadoud@canonical.com>  Wed, 09 Sep 2026 16:47:25 +0200
+
 indicator-messages (13.10.1+18.10.20180918-0ubuntu7) noble; urgency=medium
 
   * Disable googletest as it now requires C++14.
