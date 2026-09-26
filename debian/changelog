@@ -1,3 +1,12 @@
+indicator-messages (13.10.1+18.10.20180918-0ubuntu8~26.04.1) resolute; urgency=medium
+
+  * No-change backport of 0ubuntu8 from 26.10 to resolute: it builds against
+    systemd-dev, so the rebuild keeps indicator-messages.service. 0ubuntu7
+    fails to build in resolute (dh_install: usr/lib/systemd missing).
+    (LP: #2166912)
+
+ -- Ubuntu Unity Life Support <mihail.rozshko@gmail.com>  Sat, 26 Sep 2026 16:44:34 +0000
+
 indicator-messages (13.10.1+18.10.20180918-0ubuntu8) stonking; urgency=medium
 
   * Rebuild for accountsservice transition.
